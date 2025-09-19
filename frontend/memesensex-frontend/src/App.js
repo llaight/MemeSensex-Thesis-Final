@@ -296,49 +296,59 @@ function App() {
                       results.details.overall === 'safe' ? 'text-green-600' : 'text-red-600'
                     }`} fill="currentColor" viewBox="0 0 20 20">
                       {results.details.overall === 'safe' ? (
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                        // Shield with checkmark icon for safe content
+                        <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                       ) : (
-                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/>
+                        // Warning/Alert triangle icon for explicit content
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"/>
                       )}
                     </svg>
                   </div>
                   
-                  <div>
-                    <h4 className="text-xl font-semibold text-gray-800 mb-4">Analysis Complete</h4>
-                    <div className="bg-gray-50 rounded-xl p-4">
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium text-gray-700">Classification:</span>
-                        <span className={`font-bold ${results.details.overall === 'safe' ? 'text-green-600' : 'text-red-600'}`}>
-                          {results.classification}
-                        </span>
-                      </div>
-                    </div>
+                  {/* Classification directly under icon */}
+                  <div className={`inline-block px-6 py-3 rounded-2xl font-semibold text-white ${
+                    results.details.overall === 'safe' 
+                      ? 'bg-gradient-to-r from-green-400 to-emerald-500' 
+                      : 'bg-gradient-to-r from-orange-400 to-pink-500'
+                  }`}>
+                    {results.classification}
                   </div>
-
-                  {/* Classification Indicator */}
-                  <div className="pt-4">
-                    <div className="flex items-start gap-3 text-left">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                        results.details.overall === 'safe' ? 'bg-green-100' : 'bg-red-100'
-                      }`}>
-                        <div className={`w-3 h-3 rounded-full ${
-                          results.details.overall === 'safe' ? 'bg-green-600' : 'bg-red-600'
-                        }`}></div>
-                      </div>
-                      <div>
-                        <span className="text-gray-700 font-medium block">{results.classification}</span>
-                        <span className="text-xs text-gray-500">
-                          {results.details.overall === 'safe' 
-                            ? 'Non-explicit, appropriate content' 
-                            : 'Sexual or inappropriate content detected'
-                          }
+                  
+                  <div>
+                    <p className="text-gray-600 mb-6">
+                      {results.details.overall === 'safe' 
+                        ? 'This meme is appropriate for general audiences' 
+                        : 'This meme contains explicit or inappropriate content'
+                      }
+                    </p>
+                    
+                    {/* Confidence Score */}
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm font-medium text-gray-600">Confidence Level</span>
+                        <span className={`text-lg font-bold ${
+                          results.details.overall === 'safe' ? 'text-green-600' : 'text-red-600'
+                        }`}>
+                          {Math.round((results.details.overall === 'safe' ? results.details.probabilities[0][0] : results.details.probabilities[0][1]) * 100)}%
                         </span>
+                      </div>
+                      
+                      {/* Confidence Bar */}
+                      <div className="w-full bg-gray-200 rounded-full h-3">
+                        <div 
+                          className={`h-3 rounded-full transition-all duration-1000 ease-out ${
+                            results.details.overall === 'safe' ? 'bg-green-500' : 'bg-red-500'
+                          }`}
+                          style={{ 
+                            width: `${Math.round((results.details.overall === 'safe' ? results.details.probabilities[0][0] : results.details.probabilities[0][1]) * 100)}%` 
+                          }}
+                        ></div>
                       </div>
                     </div>
                   </div>
 
                   {/* Privacy Warning */}
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-6">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-12">
                     <div className="flex items-start gap-2">
                       <svg className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/>
