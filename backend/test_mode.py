@@ -12,7 +12,7 @@ import io
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  
-MODEL_PATH = os.path.join(BASE_DIR, "model", "multimodal_fold_5.pth")
+MODEL_PATH = os.path.join(BASE_DIR, "model", "best_multimodal.pth")
 
 # =========================
 # 1. Text Preprocessing
@@ -78,42 +78,57 @@ def resize_normalize_image(image_path, target_size=(224, 224)):
 # 4. Model Definitions
 # =========================
 class CrossAttentionModule(nn.Module):
-    def __init__(self, image_dim=512, text_dim=768, hidden_dim=256):
-        super().__init__()
+    def __init__(self, image_dim=512, text_dim=768, hidden_dim=256, num_heads=8):
+        super(CrossAttentionModule, self).__init__()
         self.image_proj = nn.Linear(image_dim, hidden_dim)
         self.text_proj = nn.Linear(text_dim, hidden_dim)
-        self.attention = nn.MultiheadAttention(hidden_dim, num_heads=8)
-        self.layer_norm = nn.LayerNorm(hidden_dim)
+        self.attn_img2txt = nn.MultiheadAttention(hidden_dim, num_heads, batch_first=True)
+        self.attn_txt2img = nn.MultiheadAttention(hidden_dim, num_heads, batch_first=True)
+        self.norm1 = nn.LayerNorm(hidden_dim)
+        self.norm2 = nn.LayerNorm(hidden_dim)
 
-    def forward(self, image_features, text_features):
-        image_proj = self.image_proj(image_features).unsqueeze(0)
-        text_proj = self.text_proj(text_features).unsqueeze(0)
-        attended_image, _ = self.attention(image_proj, text_proj, text_proj)
-        attended_image = self.layer_norm(attended_image + image_proj)
-        attended_text, _ = self.attention(text_proj, image_proj, image_proj)
-        attended_text = self.layer_norm(attended_text + text_proj)
-        return attended_image.squeeze(0), attended_text.squeeze(0)
+    def forward(self, image_feats, text_feats):
+        # Project
+        img_proj = self.image_proj(image_feats)   # (B, num_patches, hidden)
+        txt_proj = self.text_proj(text_feats)     # (B, seq_len, hidden)
+
+        # Image attends to text
+        img_attn, _ = self.attn_img2txt(img_proj, txt_proj, txt_proj)
+        img_out = self.norm1(img_proj + img_attn)
+
+        # Text attends to image
+        txt_attn, _ = self.attn_txt2img(txt_proj, img_proj, img_proj)
+        txt_out = self.norm2(txt_proj + txt_attn)
+
+        return img_out, txt_out
 
 class MultimodalClassifier(nn.Module):
-    def __init__(self, num_classes=2, model_name='jcblaise/roberta-tagalog-base'):
-        super().__init__()
-        # Image encoder
-        self.image_encoder = models.resnet18(pretrained=True)
-        self.image_encoder.fc = nn.Identity()
+    def __init__(self, num_classes=2, model_name='jcblaise/roberta-tagalog-base',
+                 use_mean_pooling=False):
+        super(MultimodalClassifier, self).__init__()
+
+        # Image encoder (ResNet-18, keep spatial features)
+        resnet = models.resnet18(pretrained=True)
+        modules = list(resnet.children())[:-2]  # keep until last conv (before avgpool)
+        self.image_encoder = nn.Sequential(*modules)  # (B, 512, 7, 7)
+
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
 
         # Text encoder
         self.text_encoder = AutoModel.from_pretrained(model_name)
+        self.use_mean_pooling = use_mean_pooling
 
-        # Cross-attention
+        # Cross-Attention
         self.cross_attention = CrossAttentionModule(
             image_dim=512,
             text_dim=self.text_encoder.config.hidden_size,
-            hidden_dim=256
+            hidden_dim=256,
+            num_heads=8
         )
 
-        # Fusion + classification
+        # Fusion and classification
         self.fusion = nn.Sequential(
-            nn.Linear(256*2, 512),
+            nn.Linear(256 * 2, 512),
             nn.ReLU(),
             nn.Dropout(0.3),
             nn.Linear(512, 128),
@@ -123,12 +138,29 @@ class MultimodalClassifier(nn.Module):
         )
 
     def forward(self, images, input_ids, attention_mask):
-        img_features = self.image_encoder(images)
-        text_out = self.text_encoder(input_ids=input_ids, attention_mask=attention_mask)
-        text_features = text_out.pooler_output
-        attended_img, attended_text = self.cross_attention(img_features, text_features)
-        fused_features = torch.cat([attended_img, attended_text], dim=1)
-        return self.fusion(fused_features)
+        # Extract image features
+        B = images.size(0)
+        img_feats = self.image_encoder(images)           # (B, 512, 7, 7)
+        img_feats = img_feats.flatten(2).permute(0, 2, 1)  # (B, 49, 512)
+
+        # Extract text features
+        text_outputs = self.text_encoder(input_ids=input_ids, attention_mask=attention_mask)
+        if self.use_mean_pooling:
+            mask = attention_mask.unsqueeze(-1).expand(text_outputs.last_hidden_state.size())
+            sum_hidden = torch.sum(text_outputs.last_hidden_state * mask, dim=1)
+            sum_mask = mask.sum(1).clamp(min=1e-9)
+            txt_feats = sum_hidden / sum_mask
+            txt_feats = txt_feats.unsqueeze(1)
+        else:
+            txt_feats = text_outputs.last_hidden_state  # (B, seq_len, H)
+
+        attended_img, attended_txt = self.cross_attention(img_feats, txt_feats)
+
+        img_repr = attended_img.mean(dim=1)  # (B, hidden)
+        txt_repr = attended_txt[:, 0, :]     # CLS
+
+        fused = torch.cat([img_repr, txt_repr], dim=1)
+        return self.fusion(fused)
 
 # =========================
 # 5. Load Model & Tokenizer
