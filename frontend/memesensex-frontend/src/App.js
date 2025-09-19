@@ -155,31 +155,31 @@ function App() {
                       <p className="text-lg font-medium text-gray-800">Drag & drop your meme here</p>
                       <p className="text-sm text-gray-500 mt-1">or</p>
                     </div>
+                    
+                    {/* Choose File button inside the drag zone */}
+                    <div className="mt-4">
+                      <input
+                        key={inputKey}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="hidden"
+                        id="file-upload"
+                      />
+                      <label 
+                        htmlFor="file-upload"
+                        className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-xl font-medium cursor-pointer hover:from-purple-700 hover:to-blue-700 transition-all duration-300 inline-flex items-center gap-2"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"/>
+                        </svg>
+                        Choose File
+                      </label>
+                    </div>
                   </div>
                 )}
               </div>
 
-              {!image && (
-                <div className="mt-4 text-center">
-                  <input
-                    key={inputKey}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="hidden"
-                    id="file-upload"
-                  />
-                  <label 
-                    htmlFor="file-upload"
-                    className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-xl font-medium cursor-pointer hover:from-purple-700 hover:to-blue-700 transition-all duration-300 inline-flex items-center gap-2"
-                  >
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"/>
-                    </svg>
-                    Choose File
-                  </label>
-                </div>
-              )}
               </form>
 
               {/* Action Buttons */}
@@ -241,16 +241,18 @@ function App() {
                 // Loading State
                 <div className="text-center space-y-6">
                   <div className="relative w-24 h-24 mx-auto">
-                    {/* Animated gradient background */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-200 via-blue-200 to-teal-200 rounded-full animate-pulse"></div>
-                    
-                    {/* Spinning border */}
-                    <div className="absolute inset-2 border-4 border-transparent border-t-purple-600 rounded-full animate-spin"></div>
-                    
-                    {/* Inner circle */}
-                    <div className="absolute inset-6 bg-white rounded-full flex items-center justify-center">
-                      <div className="w-3 h-3 bg-purple-600 rounded-full"></div>
+                    {/* Animated rotating squares */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="w-4 h-4 bg-purple-500 rounded animate-pulse"></div>
+                        <div className="w-4 h-4 bg-blue-500 rounded animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                        <div className="w-4 h-4 bg-teal-500 rounded animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                        <div className="w-4 h-4 bg-green-500 rounded animate-pulse" style={{animationDelay: '0.6s'}}></div>
+                      </div>
                     </div>
+                    
+                    {/* Outer rotating border */}
+                    <div className="absolute inset-0 border-4 border-transparent border-t-purple-600 rounded-full animate-spin"></div>
                   </div>
                   
                   <div>
@@ -385,7 +387,7 @@ function App() {
                       </div>
                       <div>
                         <span className="text-gray-700 font-medium block">ResNet18</span>
-                        <span className="text-xs text-gray-500">Image Analysis & Feature Extraction</span>
+                        <span className="text-xs text-gray-500">Image Feature Extraction</span>
                       </div>
                     </div>
                     
@@ -423,6 +425,17 @@ function App() {
           </div>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-100 py-6 mt-12">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center">
+            <p className="text-gray-600 text-sm">
+              Doria | Loro | Joaquin | Panela | Hernandez
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
