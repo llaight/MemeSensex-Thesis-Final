@@ -110,7 +110,7 @@ function App() {
   return (
     <div className="min-h-screen">
       {/* Navigation Header */}
-      <nav className="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white py-4 px-6 shadow-lg">
+      <nav className="fixed top-0 left-0 right-0 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white py-4 px-6 shadow-lg z-50">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img 
@@ -162,12 +162,12 @@ function App() {
                 />
                 {/* Animated Emoji Placeholders */}
                 <div className="absolute inset-0 pointer-events-none">
-                  <div className="absolute -top-4 left-4 text-3xl animate-bounce z-20" style={{animationDelay: '0s', animationDuration: '3s'}}>👌</div>
-                  <div className="absolute top-8 -right-8 text-3xl animate-pulse z-20" style={{animationDelay: '1s', animationDuration: '4s'}}>👈</div>
+                  <div className="absolute -top-4 left-4 text-2xl animate-bounce z-20" style={{animationDelay: '0s', animationDuration: '3s'}}>👌</div>
+                  <div className="absolute top-8 -right-8 text-4xl animate-pulse z-20" style={{animationDelay: '1s', animationDuration: '4s'}}>👈</div>
                   <div className="absolute -bottom-4 -left-8 text-3xl animate-bounce z-20" style={{animationDelay: '2s', animationDuration: '3.5s'}}>👅</div>
-                  <div className="absolute bottom-0 -right-4 text-3xl animate-pulse z-20" style={{animationDelay: '0.5s', animationDuration: '2.5s'}}>🍆</div>
-                  <div className="absolute top-1/2 -left-12 text-3xl animate-bounce z-20" style={{animationDelay: '1.5s', animationDuration: '4s'}}>🍑</div>
-                  <div className="absolute top-1/4 -right-12 text-3xl animate-pulse z-20" style={{animationDelay: '2.5s', animationDuration: '3s'}}>💦</div>
+                  <div className="absolute bottom-0 -right-4 text-4xl animate-pulse z-20" style={{animationDelay: '0.5s', animationDuration: '2.5s'}}>🍆</div>
+                  <div className="absolute top-1/2 -left-12 text-5xl animate-bounce z-20" style={{animationDelay: '1.5s', animationDuration: '4s'}}>🍑</div>
+                  <div className="absolute top-1/3 -right-16 text-2xl animate-pulse z-20" style={{animationDelay: '2.5s', animationDuration: '3s'}}>💦</div>
                 </div>
               </div>
             </div>
