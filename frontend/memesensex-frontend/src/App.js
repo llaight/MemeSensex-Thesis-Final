@@ -518,92 +518,83 @@ function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="min h-screen py-16 bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
+      <section id="about" className="pt-28 pb-16 bg-white">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">About MemeSenseX</h2>
-            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-              MemeSenseX is an AI-driven system built to detect sexually suggestive content in Tagalog memes. By combining advanced image recognition with natural language processing, it analyzes both visuals and text to capture the full meaning behind memes.
-            </p>
-          </div>
 
           {/* The Stack Behind MemeSenseX */}
           <div className="mb-16">
-            <h3 className="text-3xl font-bold text-center text-gray-800 mb-8">The Stack Behind MemeSenseX</h3>
+            <h3 className="text-3xl font-bold text-center text-gray-800 mb-4">The Stack Behind MemeSenseX</h3>
             <p className="text-center text-gray-600 mb-12">Compact, powerful, and tuned for Filipino internet culture. Here's how each piece contributes.</p>
             
             <div className="grid md:grid-cols-3 gap-8">
               {/* ResNet-18 */}
-              <div className="bg-gradient-to-br from-red-500 to-red-600 text-white rounded-2xl p-6">
-                <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
+              <div className="bg-white border-2 border-transparent bg-gradient-to-br from-red-500 to-red-600 bg-clip-border rounded-2xl p-0.5">
+                <div className="bg-white rounded-2xl p-6 h-full">
+                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                  </div>
+                  <h4 className="text-xl font-bold mb-3 text-red-600">ResNet-18</h4>
+                  <p className="text-gray-700 mb-4">A lightweight residual CNN that learns deeper visual patterns without degradation—effective for detecting suggestive cues in images.</p>
+                  <ul className="space-y-1 text-sm text-gray-600">
+                    <li>• Residual connections</li>
+                    <li>• Lightweight CNN</li>
+                    <li>• Robust visual features</li>
+                    <li>• Efficient inference</li>
+                  </ul>
                 </div>
-                <h4 className="text-xl font-bold mb-3">ResNet-18</h4>
-                <p className="text-white/90 mb-4">A lightweight residual CNN that learns deeper visual patterns without degradation—effective for detecting suggestive cues in images.</p>
-                <ul className="space-y-1 text-sm text-white/80">
-                  <li>• Residual connections</li>
-                  <li>• Lightweight CNN</li>
-                  <li>• Robust visual features</li>
-                  <li>• Efficient inference</li>
-                </ul>
               </div>
 
               {/* Tagalog BERT */}
-              <div className="bg-gradient-to-br from-orange-500 to-yellow-500 text-white rounded-2xl p-6">
-                <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
+              <div className="bg-white border-2 border-transparent bg-gradient-to-br from-orange-500 to-yellow-500 bg-clip-border rounded-2xl p-0.5">
+                <div className="bg-white rounded-2xl p-6 h-full">
+                  <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-lg flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                  </div>
+                  <h4 className="text-xl font-bold mb-3 text-orange-600">Tagalog BERT</h4>
+                  <p className="text-gray-700 mb-4">BERT trained on large-scale Tagalog data to understand slang, code-mixing, and local expressions common in Filipino memes.</p>
+                  <ul className="space-y-1 text-sm text-gray-600">
+                    <li>• Tagalog-tuned</li>
+                    <li>• Contextual text</li>
+                    <li>• Code-mix ready</li>
+                  </ul>
                 </div>
-                <h4 className="text-xl font-bold mb-3">Tagalog BERT</h4>
-                <p className="text-white/90 mb-4">BERT trained on large-scale Tagalog data to understand slang, code-mixing, and local expressions common in Filipino memes.</p>
-                <ul className="space-y-1 text-sm text-white/80">
-                  <li>• Tagalog-tuned</li>
-                  <li>• Contextual text</li>
-                  <li>• Slang aware</li>
-                  <li>• Code-mix ready</li>
-                </ul>
               </div>
 
               {/* MemeSenseX */}
-              <div className="bg-gradient-to-br from-red-500 to-orange-500 text-white rounded-2xl p-6">
-                <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                  </svg>
+              <div className="bg-white border-2 border-transparent bg-gradient-to-br from-red-500 to-orange-500 bg-clip-border rounded-2xl p-0.5">
+                <div className="bg-white rounded-2xl p-6 h-full">
+                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                      <path d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+                    </svg>
+                  </div>
+                  <h4 className="text-xl font-bold mb-3 text-red-600">MemeSenseX</h4>
+                  <p className="text-gray-700 mb-4">Fuses ResNet-18 visuals with Tagalog BERT text via cross-attention and a contrastive multi-task loss for higher accuracy.</p>
+                  <ul className="space-y-1 text-sm text-gray-600">
+                    <li>• Cross-attention</li>
+                    <li>• Slang aware</li>
+                    <li>• Multimodal fusion</li>
+                  </ul>
                 </div>
-                <h4 className="text-xl font-bold mb-3">MemeSenseX</h4>
-                <p className="text-white/90 mb-4">Fuses ResNet-18 visuals with Tagalog BERT text via cross-attention and a contrastive multi-task loss for higher accuracy.</p>
-                <ul className="space-y-1 text-sm text-white/80">
-                  <li>• Cross-attention</li>
-                  <li>• Contrastive loss</li>
-                  <li>• Multimodal fusion</li>
-                  <li>• High accuracy</li>
-                </ul>
               </div>
             </div>
           </div>
-
-          {/* Multimodal Intelligence */}
-          <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-2xl p-8 text-center">
-            <h3 className="text-2xl font-bold mb-4">Multimodal Intelligence</h3>
-            <p className="text-white/90 text-lg">
-              Vision + Language + Culture: A multimodal system that reads, images, understands, tagalog, and interprets context.
-            </p>
-          </div>
-
-          {/* Footer */}
-          <div className="mt-16 pt-8 border-t border-gray-200 text-center">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <img src={logo} alt="Logo" className="h-8 w-8"/>
-              <span className="text-xl font-bold text-gray-800">MemeSenseX</span>
-            </div>
-            <p className="text-gray-600">Powered by AICAD - Advanced AI for Content Analysis and Detection</p>
-          </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-800 text-white py-3 px-6 w-full">
+        <div className="flex items-center justify-center gap-3 text-sm">
+          <img src={logo} alt="Logo" className="h-6 w-6"/>
+          <span className="text-gray-300">|</span>
+          <span className="font-semibold">MemeSenseX</span>
+          <span className="text-gray-300">Powered by AICAD - Angela Ivan Chynna Alex Daniela</span>
+        </div>
+      </footer>
     </div>
   );
 }
