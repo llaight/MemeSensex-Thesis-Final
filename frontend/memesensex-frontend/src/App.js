@@ -158,16 +158,16 @@ function App() {
                 <img 
                   src={logo} 
                   alt="MemeSenseX logo" 
-                  className="w-64 h-64 md:w-80 md:h-80 object-contain z-0 relative"
+                  className="w-80 h-80 md:w-96 md:h-96 object-contain z-0 relative"
                 />
                 {/* Animated Emoji Placeholders */}
                 <div className="absolute inset-0 pointer-events-none">
-                  <div className="absolute -top-4 left-4 text-2xl animate-bounce z-20" style={{animationDelay: '0s', animationDuration: '3s'}}>👌</div>
-                  <div className="absolute top-8 -right-8 text-4xl animate-pulse z-20" style={{animationDelay: '1s', animationDuration: '4s'}}>👈</div>
-                  <div className="absolute -bottom-4 -left-8 text-3xl animate-bounce z-20" style={{animationDelay: '2s', animationDuration: '3.5s'}}>👅</div>
-                  <div className="absolute bottom-0 -right-4 text-4xl animate-pulse z-20" style={{animationDelay: '0.5s', animationDuration: '2.5s'}}>🍆</div>
-                  <div className="absolute top-1/2 -left-12 text-5xl animate-bounce z-20" style={{animationDelay: '1.5s', animationDuration: '4s'}}>🍑</div>
-                  <div className="absolute top-1/3 -right-16 text-2xl animate-pulse z-20" style={{animationDelay: '2.5s', animationDuration: '3s'}}>💦</div>
+                  <div className="absolute -top-8 left-8 text-3xl animate-bounce z-20" style={{animationDelay: '0s', animationDuration: '3s'}}>👌</div>
+                  <div className="absolute top-15 -right-12 text-5xl animate-bounce z-20" style={{animationDelay: '1s', animationDuration: '4s'}}>👈</div>
+                  <div className="absolute -bottom-8 -left-12 text-4xl animate-bounce z-20" style={{animationDelay: '2s', animationDuration: '3.5s'}}>👅</div>
+                  <div className="absolute bottom-4 -right-8 text-5xl animate-bounce z-20" style={{animationDelay: '0.5s', animationDuration: '2.5s'}}>🍆</div>
+                  <div className="absolute top-1/2 -left-16 text-6xl animate-bounce z-20" style={{animationDelay: '1.5s', animationDuration: '4s'}}>🍑</div>
+                  <div className="absolute top-1/4 -right-20 text-3xl animate-bounce z-20" style={{animationDelay: '2.5s', animationDuration: '3s'}}>💦</div>
                 </div>
               </div>
             </div>
@@ -195,12 +195,8 @@ function App() {
       </section>
 
       {/* Tool Section */}
-      <section id="tool" className="min-h-screen py-16 bg-white">
+      <section id="tool" className="pt-28 pb-12 bg-white">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">AI Analysis Tool</h2>
-            <p className="text-gray-600 text-lg">Upload your meme and discover its content classification</p>
-          </div>
           
           {/* Main Analysis Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -327,7 +323,7 @@ function App() {
                   </div>
                   <h3 className="text-lg font-semibold">Analysis Results</h3>
                 </div>
-                <p className="text-white/80 text-xs mt-1">AI classification outcomes</p>
+                <p className="text-white/80 text-xs mt-1">Model classification outcomes</p>
               </div>
               
               <div className="p-6">
