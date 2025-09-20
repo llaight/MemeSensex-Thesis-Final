@@ -572,12 +572,12 @@ function App() {
                       <path d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
                     </svg>
                   </div>
-                  <h4 className="text-xl font-bold mb-3 text-red-600">MemeSenseX</h4>
-                  <p className="text-gray-700 mb-4">Fuses ResNet-18 visuals with Tagalog BERT text via cross-attention and a contrastive multi-task loss for higher accuracy.</p>
+                  <h4 className="text-xl font-bold mb-3 text-red-600">Urban Dictionary</h4>
+                  <p className="text-gray-700 mb-4">Urban Dictionary as a resource to capture slang to help bridge gaps in context and makes the model aware of nuances in informal online language.</p>
                   <ul className="space-y-1 text-sm text-gray-600">
-                    <li>• Cross-attention</li>
                     <li>• Slang aware</li>
-                    <li>• Multimodal fusion</li>
+                    <li>• Context enrichment</li>
+                    <li>• Nuance capture</li>
                   </ul>
                 </div>
               </div>
