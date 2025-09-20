@@ -61,9 +61,7 @@ def resize_normalize_image(image_path, target_size=(224, 224)):
             std=[0.229, 0.224, 0.225]
         )
     ])
-    # image = Image.open(image_path).convert('RGB')
-    # image = preprocess_image(image)
-    # return image.unsqueeze(0)  # add batch dim
+
     if isinstance(image_path, str):  # file path
         pil_image = Image.open(image_path).convert('RGB')
     elif isinstance(image_path, Image.Image):  # already a PIL image
@@ -210,27 +208,3 @@ def run_inference(image_path):
         'clean_text': clean_text
     }
 
-# =========================
-# 7. Visualization
-# =========================
-# def visualize_result(image_path, result):
-#     img = Image.open(image_path)
-#     plt.figure(figsize=(6,6))
-#     plt.imshow(img)
-#     plt.axis('off')
-#     plt.title(f"Prediction: {result['prediction']} | Prob: {result['probabilities'][0]}")
-#     plt.show()
-
-# =========================
-# 8. Example Usage
-# =========================
-# if __name__ == "__main__":
-#     image_path = "backend/sexual_text.jpg"
-#     result = run_inference(image_path)
-#     print("\n--- Inference Result ---")
-#     print("Predicted Class:", result['prediction'])
-#     print("Probabilities:", result['probabilities'])
-#     print("OCR Raw Text:", result['raw_text'])
-#     print("Cleaned Text:", result['clean_text'])
-
-#     visualize_result(image_path, result)
