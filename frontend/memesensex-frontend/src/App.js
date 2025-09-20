@@ -108,14 +108,11 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-teal-50">
+    <div className="min-h-screen">
       {/* Navigation Header */}
-      <nav className="bg-gradient-to-r from-purple-600 via-blue-600 to-teal-500 text-white py-4 px-6 shadow-lg fixed w-full top-0 z-50">
+      <nav className="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white py-4 px-6 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white/100 rounded-full flex items-center justify-center">
-              <img src={logo} alt="Logo" className="h-6 w-6"/>
-            </div>
             <h1 className="text-2xl font-bold text-white">
               MemeSenseX
             </h1>
@@ -146,42 +143,47 @@ function App() {
       </nav>
 
       {/* Home Section */}
-      <section id="home" className="pt-20 min-h-screen flex items-center">
-        <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Column - Text Content */}
-            <div className="space-y-8">
-              <div className="space-y-6">
-                <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-teal-500 bg-clip-text text-transparent">
-                  MemeSenseX
-                </h1>
-                <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                  MemeSenseX is an AI-driven system built to detect sexually suggestive content in Tagalog memes. By combining advanced image recognition (ResNet-18) with natural language processing (Tagalog-BERT), it analyzes both visuals and text to capture the full meaning behind memes.
-                </p>
-              </div>
-              
-              <button 
-                onClick={() => scrollToSection('tool')}
-                className="bg-gradient-to-r from-red-500 to-yellow-500 text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:from-red-600 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-              >
-                Go to Tool →
-              </button>
+      <section id="home" className="h-[80vh] flex items-start bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
+        <div className="max-w-6xl mx-auto px-6 py-16 w-full">
+          {/* Logo and Title on Same Line */}
+          <div className="flex items-center justify-center gap-6 mb-12">
+            <img 
+              src={logo} 
+              alt="MemeSenseX logo" 
+              className="w-16 h-16 md:w-20 md:h-20 object-contain"
+            />
+            <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent">
+              MemeSenseX
+            </h1>
+            <img 
+              src={logo} 
+              alt="MemeSenseX logo" 
+              className="w-16 h-16 md:w-20 md:h-20 object-contain"
+            />
+          </div>
+          
+          {/* Text and Button in Column */}
+          <div className="flex flex-col items-center space-y-8 text-center">
+            {/* Text Content */}
+            <div className="space-y-6 max-w-4xl">
+              <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+                MemeSenseX is an AI-driven system built to detect sexually suggestive content in Tagalog memes. By combining advanced image recognition (ResNet-18) with natural language processing (Tagalog-BERT), it analyzes both visuals and text to capture the full meaning behind memes.
+              </p>
             </div>
-
-            {/* Right Column - Logo */}
-            <div className="flex justify-center lg:justify-end">
-              <img 
-                src={logo} 
-                alt="MemeSenseX logo" 
-                className="w-64 h-64 md:w-80 md:h-80 object-contain"
-              />
-            </div>
+            
+            {/* Button */}
+            <button 
+              onClick={() => scrollToSection('tool')}
+              className="bg-gradient-to-r from-red-500 to-yellow-500 text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:from-red-600 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              Go to Tool →
+            </button>
           </div>
         </div>
       </section>
 
       {/* Tool Section */}
-      <section id="tool" className="min-h-screen py-20">
+      <section id="tool" className="min-h-screen py-16 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">AI Analysis Tool</h2>
@@ -193,7 +195,7 @@ function App() {
             
             {/* Left Column - Input Image */}
             <section className="bg-white rounded-2xl shadow-xl overflow-hidden" aria-label="Image Upload Section">
-              <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4">
+              <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-4">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center">
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -248,7 +250,7 @@ function App() {
                         />
                         <label 
                           htmlFor="file-upload"
-                          className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-3 rounded-xl font-medium cursor-pointer hover:from-purple-700 hover:to-blue-700 transition-all duration-300 inline-flex items-center gap-2"
+                          className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-xl font-medium cursor-pointer hover:from-red-600 hover:to-orange-600 transition-all duration-300 inline-flex items-center gap-2"
                         >
                           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"/>
@@ -270,7 +272,7 @@ function App() {
                     className={`px-6 py-3 rounded-xl font-medium flex-1 flex items-center justify-center gap-2 transition-all duration-300 ${
                       !image || isLoading 
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                        : 'bg-gradient-to-r from-purple-600 to-teal-500 text-white hover:from-purple-700 hover:to-teal-600'
+                        : 'bg-gradient-to-r from-red-500 to-orange-500 text-white hover:from-red-600 hover:to-orange-600'
                     }`}
                   >
                     {isLoading ? (
@@ -304,7 +306,7 @@ function App() {
 
             {/* Right Column - Analysis Results */}
             <section className="bg-white rounded-2xl shadow-xl overflow-hidden" aria-label="Analysis Results Section">
-              <div className="bg-gradient-to-r from-teal-500 to-green-500 text-white p-4">
+              <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-4">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 bg-white/20 rounded-lg flex items-center justify-center">
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -346,7 +348,7 @@ function App() {
                     <div className="space-y-4">
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div 
-                          className="bg-gradient-to-r from-purple-600 via-blue-600 to-teal-500 h-2 rounded-full transition-all duration-1000 ease-out"
+                          className="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 h-2 rounded-full transition-all duration-1000 ease-out"
                           style={{ width: `${((currentStage + 1) / 3) * 100}%` }}
                         ></div>
                       </div>
@@ -391,7 +393,7 @@ function App() {
                     <div className={`inline-block px-6 py-3 rounded-2xl font-semibold text-white ${
                       results.details.overall === 'safe' 
                         ? 'bg-gradient-to-r from-green-400 to-emerald-500' 
-                        : 'bg-gradient-to-r from-orange-400 to-pink-500'
+                        : 'bg-gradient-to-r from-red-500 to-orange-500'
                     }`}>
                       {results.classification}
                     </div>
@@ -508,7 +510,7 @@ function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="min-h-screen py-20 bg-white">
+      <section id="about" className="min h-screen py-16 bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">About MemeSenseX</h2>
@@ -558,7 +560,7 @@ function App() {
               </div>
 
               {/* MemeSenseX */}
-              <div className="bg-gradient-to-br from-purple-500 to-pink-500 text-white rounded-2xl p-6">
+              <div className="bg-gradient-to-br from-red-500 to-orange-500 text-white rounded-2xl p-6">
                 <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mb-4">
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -577,7 +579,7 @@ function App() {
           </div>
 
           {/* Multimodal Intelligence */}
-          <div className="bg-gradient-to-r from-purple-600 to-teal-500 text-white rounded-2xl p-8 text-center">
+          <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-2xl p-8 text-center">
             <h3 className="text-2xl font-bold mb-4">Multimodal Intelligence</h3>
             <p className="text-white/90 text-lg">
               Vision + Language + Culture: A multimodal system that reads, images, understands, tagalog, and interprets context.
