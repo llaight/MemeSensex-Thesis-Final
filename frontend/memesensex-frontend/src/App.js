@@ -221,8 +221,8 @@ function App() {
                   <div 
                     className={`border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${
                       isDragOver 
-                        ? 'border-purple-400 bg-purple-50' 
-                        : 'border-gray-300 bg-gray-50 hover:border-purple-300 hover:bg-purple-25'
+                        ? 'border-red-400 bg-red-50' 
+                        : 'border-gray-300 bg-gray-50 hover:border-red-300 hover:bg-red-25'
                     }`}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
@@ -236,8 +236,8 @@ function App() {
                     />
                   ) : (
                     <div className="space-y-4">
-                      <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto">
-                        <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+                        <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                         </svg>
                       </div>
@@ -258,7 +258,7 @@ function App() {
                         />
                         <label 
                           htmlFor="file-upload"
-                          className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-xl font-medium cursor-pointer hover:from-red-600 hover:to-orange-600 transition-all duration-300 inline-flex items-center gap-2"
+                          className="bg-orange-500 text-white px-6 py-3 rounded-xl font-medium cursor-pointer hover:bg-orange-600 transition-all duration-300 inline-flex items-center gap-2"
                         >
                           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"/>
@@ -280,7 +280,7 @@ function App() {
                     className={`px-6 py-3 rounded-xl font-medium flex-1 flex items-center justify-center gap-2 transition-all duration-300 ${
                       !image || isLoading 
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                        : 'bg-gradient-to-r from-red-500 to-orange-500 text-white hover:from-red-600 hover:to-orange-600'
+                        : 'bg-red-500 text-white hover:bg-red-600'
                     }`}
                   >
                     {isLoading ? (
@@ -334,15 +334,15 @@ function App() {
                       {/* Animated rotating squares */}
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="grid grid-cols-2 gap-2">
-                          <div className="w-4 h-4 bg-purple-500 rounded animate-pulse"></div>
-                          <div className="w-4 h-4 bg-blue-500 rounded animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                          <div className="w-4 h-4 bg-teal-500 rounded animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                          <div className="w-4 h-4 bg-green-500 rounded animate-pulse" style={{animationDelay: '0.6s'}}></div>
+                          <div className="w-4 h-4 bg-red-500 rounded animate-pulse"></div>
+                          <div className="w-4 h-4 bg-orange-500 rounded animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                          <div className="w-4 h-4 bg-red-400 rounded animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                          <div className="w-4 h-4 bg-orange-400 rounded animate-pulse" style={{animationDelay: '0.6s'}}></div>
                         </div>
                       </div>
                       
                       {/* Outer rotating border */}
-                      <div className="absolute inset-0 border-4 border-transparent border-t-purple-600 rounded-full animate-spin"></div>
+                      <div className="absolute inset-0 border-4 border-transparent border-t-red-600 rounded-full animate-spin"></div>
                     </div>
                     
                     <div>
@@ -363,16 +363,16 @@ function App() {
                       
                       {/* Stage Labels */}
                       <div className="flex justify-between text-sm">
-                        <div className={`flex items-center gap-2 ${currentStage >= 0 ? 'text-purple-600' : 'text-gray-400'}`}>
-                          <div className={`w-3 h-3 rounded-full ${currentStage >= 0 ? 'bg-purple-600' : 'bg-gray-300'}`}></div>
+                        <div className={`flex items-center gap-2 ${currentStage >= 0 ? 'text-red-600' : 'text-gray-400'}`}>
+                          <div className={`w-3 h-3 rounded-full ${currentStage >= 0 ? 'bg-red-600' : 'bg-gray-300'}`}></div>
                           <span className="font-medium">Visual Analysis</span>
                         </div>
-                        <div className={`flex items-center gap-2 ${currentStage >= 1 ? 'text-blue-600' : 'text-gray-400'}`}>
-                          <div className={`w-3 h-3 rounded-full ${currentStage >= 1 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+                        <div className={`flex items-center gap-2 ${currentStage >= 1 ? 'text-orange-600' : 'text-gray-400'}`}>
+                          <div className={`w-3 h-3 rounded-full ${currentStage >= 1 ? 'bg-orange-600' : 'bg-gray-300'}`}></div>
                           <span className="font-medium">Text Processing</span>
                         </div>
-                        <div className={`flex items-center gap-2 ${currentStage >= 2 ? 'text-teal-600' : 'text-gray-400'}`}>
-                          <div className={`w-3 h-3 rounded-full ${currentStage >= 2 ? 'bg-teal-600' : 'bg-gray-300'}`}></div>
+                        <div className={`flex items-center gap-2 ${currentStage >= 2 ? 'text-yellow-600' : 'text-gray-400'}`}>
+                          <div className={`w-3 h-3 rounded-full ${currentStage >= 2 ? 'bg-yellow-600' : 'bg-gray-300'}`}></div>
                           <span className="font-medium">Classification</span>
                         </div>
                       </div>
@@ -400,8 +400,8 @@ function App() {
                     {/* Classification directly under icon */}
                     <div className={`inline-block px-6 py-3 rounded-2xl font-semibold text-white ${
                       results.details.overall === 'safe' 
-                        ? 'bg-gradient-to-r from-green-400 to-emerald-500' 
-                        : 'bg-gradient-to-r from-red-500 to-orange-500'
+                        ? 'bg-green-500' 
+                        : 'bg-red-500'
                     }`}>
                       {results.classification}
                     </div>
@@ -472,8 +472,8 @@ function App() {
                       <h5 className="text-sm font-medium text-gray-500 mb-3 text-center">AI Models Used</h5>
                       
                       <div className="flex items-start gap-3 text-left">
-                        <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <div className="w-3 h-3 bg-purple-600 rounded-full"></div>
+                        <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                         </div>
                         <div>
                           <span className="text-gray-700 font-medium block">ResNet18</span>
@@ -482,8 +482,8 @@ function App() {
                       </div>
                       
                       <div className="flex items-start gap-3 text-left">
-                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
+                        <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                          <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
                         </div>
                         <div>
                           <span className="text-gray-700 font-medium block">TagalogBERT</span>
@@ -501,15 +501,15 @@ function App() {
           <div className="mt-8 flex justify-center">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-purple-600 rounded-full"></div>
+                <div className="w-3 h-3 bg-red-600 rounded-full"></div>
                 <span className="text-sm text-gray-600">Upload</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
+                <div className="w-3 h-3 bg-orange-600 rounded-full"></div>
                 <span className="text-sm text-gray-600">Analyze</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-teal-600 rounded-full"></div>
+                <div className="w-3 h-3 bg-yellow-600 rounded-full"></div>
                 <span className="text-sm text-gray-600">Results</span>
               </div>
             </div>
