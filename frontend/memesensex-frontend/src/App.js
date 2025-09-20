@@ -113,6 +113,11 @@ function App() {
       <nav className="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white py-4 px-6 shadow-lg">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
+            <img 
+              src={logo} 
+              alt="MemeSenseX logo" 
+              className="w-8 h-8 object-contain"
+            />
             <h1 className="text-2xl font-bold text-white">
               MemeSenseX
             </h1>
@@ -143,41 +148,48 @@ function App() {
       </nav>
 
       {/* Home Section */}
-      <section id="home" className="h-[80vh] flex items-start bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
-        <div className="max-w-6xl mx-auto px-6 py-16 w-full">
-          {/* Logo and Title on Same Line */}
-          <div className="flex items-center justify-center gap-6 mb-12">
-            <img 
-              src={logo} 
-              alt="MemeSenseX logo" 
-              className="w-16 h-16 md:w-20 md:h-20 object-contain"
-            />
-            <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent">
-              MemeSenseX
-            </h1>
-            <img 
-              src={logo} 
-              alt="MemeSenseX logo" 
-              className="w-16 h-16 md:w-20 md:h-20 object-contain"
-            />
-          </div>
-          
-          {/* Text and Button in Column */}
-          <div className="flex flex-col items-center space-y-8 text-center">
-            {/* Text Content */}
-            <div className="space-y-6 max-w-4xl">
-              <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                MemeSenseX is an AI-driven system built to detect sexually suggestive content in Tagalog memes. By combining advanced image recognition (ResNet-18) with natural language processing (Tagalog-BERT), it analyzes both visuals and text to capture the full meaning behind memes.
-              </p>
+      <section id="home" className="min-h-screen flex items-center bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500">
+        <div className="max-w-6xl mx-auto px-6">
+          {/* Two Column Layout */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Logo with Animated Emojis */}
+            <div className="flex justify-center lg:justify-start relative">
+              <div className="relative">
+                <img 
+                  src={logo} 
+                  alt="MemeSenseX logo" 
+                  className="w-64 h-64 md:w-80 md:h-80 object-contain z-0 relative"
+                />
+                {/* Animated Emoji Placeholders */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className="absolute -top-4 left-4 text-3xl animate-bounce z-20" style={{animationDelay: '0s', animationDuration: '3s'}}>👌</div>
+                  <div className="absolute top-8 -right-8 text-3xl animate-pulse z-20" style={{animationDelay: '1s', animationDuration: '4s'}}>👈</div>
+                  <div className="absolute -bottom-4 -left-8 text-3xl animate-bounce z-20" style={{animationDelay: '2s', animationDuration: '3.5s'}}>👅</div>
+                  <div className="absolute bottom-0 -right-4 text-3xl animate-pulse z-20" style={{animationDelay: '0.5s', animationDuration: '2.5s'}}>🍆</div>
+                  <div className="absolute top-1/2 -left-12 text-3xl animate-bounce z-20" style={{animationDelay: '1.5s', animationDuration: '4s'}}>🍑</div>
+                  <div className="absolute top-1/4 -right-12 text-3xl animate-pulse z-20" style={{animationDelay: '2.5s', animationDuration: '3s'}}>💦</div>
+                </div>
+              </div>
             </div>
-            
-            {/* Button */}
-            <button 
-              onClick={() => scrollToSection('tool')}
-              className="bg-gradient-to-r from-red-500 to-yellow-500 text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:from-red-600 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-            >
-              Go to Tool →
-            </button>
+
+            {/* Right Column - Title, Text and Button */}
+            <div className="space-y-8 text-white">
+              <div className="space-y-6">
+                <h1 className="text-5xl md:text-6xl font-bold text-white">
+                  MemeSenseX
+                </h1>
+                <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+                  MemeSenseX is an AI-driven system built to detect sexually suggestive content in Tagalog memes. By combining advanced image recognition (ResNet-18) with natural language processing (Tagalog-BERT), it analyzes both visuals and text to capture the full meaning behind memes.
+                </p>
+              </div>
+              
+              <button 
+                onClick={() => scrollToSection('tool')}
+                className="bg-white text-red-500 px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                Go to Tool →
+              </button>
+            </div>
           </div>
         </div>
       </section>
