@@ -5,7 +5,6 @@ import torch.nn.functional as F
 import math
 from transformers import AutoModel, AutoTokenizer
 from PIL import Image
-# import pytesseract
 import matplotlib.pyplot as plt
 import easyocr
 import numpy as np
@@ -40,8 +39,8 @@ def preprocess_text(text):
     text = emoji_pattern.sub(r'', text)
     # Lowercase and strip
     text = text.lower().strip()
-    # Keep letters (including accented), numbers, and spaces
-    text = re.sub(r'[^a-z0-9ñáéíóúü\s]', '', text)
+    # Keep letters (including accented), and spaces
+    text = re.sub(r'[^a-zñáéíóúü\s]', '', text)
     # Normalize whitespace
     text = re.sub(r'\s+', ' ', text)
 
@@ -125,7 +124,7 @@ def ocr_extract_text(image_path, confidence_threshold=0.6):
             final_text, avg_conf = final_text_gauss, avg_conf_gauss
     
     if not final_text:
-        return None
+        return "", "", 0.0
 
     preprocess_txt = preprocess_text(final_text)
     return final_text, preprocess_txt, avg_conf
@@ -357,7 +356,7 @@ def run_inference(image_path):
 # =========================
 # if __name__ == "__main__":
 #     # Example: load image from path
-#     IMAGE_PATH = "backend/sx1.jpg"
+#     IMAGE_PATH = "backend/OIP (1).jfif"
 
 #     # test_dimension_sensitivity(IMAGE_PATH)
 
