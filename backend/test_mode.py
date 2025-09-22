@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import math
 from transformers import AutoModel, AutoTokenizer
 from PIL import Image
-import pytesseract
+# import pytesseract
 import matplotlib.pyplot as plt
 import easyocr
 import numpy as np
