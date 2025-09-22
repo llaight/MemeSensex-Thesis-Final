@@ -20,9 +20,11 @@ def process_predict():
     # result
     result = run_inference(image_bytes)
 
+    print(f"Processed result: {result}")
+
     return jsonify({
         "status": "success",
-        "message": "Image processed successfully and saved into the database",
+        "message": "Image processed successfully",
         "data": result
     }), 201
 
