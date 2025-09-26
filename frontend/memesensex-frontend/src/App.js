@@ -1,6 +1,6 @@
 import './App.css';
 import logo from './asset/logo.svg';
-import {useState } from "react";
+import {useState, useEffect } from "react";
 
 function App() {
   const [image, setImage] = useState(null);
@@ -10,6 +10,15 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentStage, setCurrentStage] = useState(0);
   const [results, setResults] = useState(null);
+  const [savedClassifications, setSavedClassifications] = useState([]);
+
+  // Load saved classifications from localStorage on component mount
+  useEffect(() => {
+    const saved = localStorage.getItem('memesensex-saved');
+    if (saved) {
+      setSavedClassifications(JSON.parse(saved));
+    }
+  }, []);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -105,6 +114,46 @@ function App() {
       setImage(URL.createObjectURL(files[0]));
       setImageFile(files[0]); 
     }
+  };
+
+  const handleSave = async () => {
+    if (!results || !image || !imageFile) return;
+    
+    // Convert image file to base64 data URL for permanent storage
+    const convertToBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    };
+
+    try {
+      const base64Image = await convertToBase64(imageFile);
+      
+      const savedItem = {
+        id: Date.now().toString(),
+        timestamp: new Date().toISOString(),
+        image: base64Image, // Now storing as base64 data URL
+        classification: results.classification,
+        confidence: Math.round((results.details.overall === 'safe' ? results.details.probabilities[0][0] : results.details.probabilities[0][1]) * 100),
+        overall: results.details.overall
+      };
+
+      const updatedSaved = [savedItem, ...savedClassifications];
+      setSavedClassifications(updatedSaved);
+      localStorage.setItem('memesensex-saved', JSON.stringify(updatedSaved));
+    } catch (error) {
+      console.error('Error saving classification:', error);
+      alert('Error saving classification. Please try again.');
+    }
+  };
+
+  const handleDeleteSaved = (id) => {
+    const updatedSaved = savedClassifications.filter(item => item.id !== id);
+    setSavedClassifications(updatedSaved);
+    localStorage.setItem('memesensex-saved', JSON.stringify(updatedSaved));
   };
 
   return (
@@ -439,6 +488,17 @@ function App() {
                       </div>
                     </div>
 
+                    {/* Save Button */}
+                    <button
+                      onClick={handleSave}
+                      className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white py-3 px-6 rounded-lg font-semibold hover:from-red-600 hover:to-orange-600 transition-all duration-300 mt-6 flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                      </svg>
+                      Save Classification
+                    </button>
+
                     {/* Privacy Warning */}
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-12">
                       <div className="flex items-start gap-2">
@@ -446,7 +506,7 @@ function App() {
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/>
                         </svg>
                         <p className="text-xs text-blue-800">
-                          <strong>Privacy Notice:</strong> This system does not store, save, or retain any uploaded images or analysis data. All processing is done locally and securely.
+                          <strong>Privacy Notice:</strong> This system does not store, save, or retain any uploaded images or analysis data on external servers. All processing is done locally and securely. Saved classifications are stored only in your browser's local storage.
                         </p>
                       </div>
                     </div>
@@ -516,6 +576,75 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* Saved Classifications Section */}
+      {savedClassifications.length > 0 && (
+        <section className="py-16 bg-gray-50">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-bold text-gray-800 mb-4">Saved Classifications</h3>
+              <p className="text-gray-600">Your locally stored classification results</p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {savedClassifications.map((item) => (
+                <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                  {/* Header with ID and Delete */}
+                  <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-3 flex justify-between items-center">
+                    <div className="text-sm font-mono">ID: {item.id}</div>
+                    <button
+                      onClick={() => handleDeleteSaved(item.id)}
+                      className="text-white hover:text-red-200 transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H8a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Thumbnail */}
+                  <div className="aspect-video bg-gray-100">
+                    <img 
+                      src={item.image} 
+                      alt="Saved meme" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Classification and Confidence */}
+                  <div className="p-4">
+                    <div className={`inline-block px-3 py-1 rounded-full text-sm font-semibold text-white mb-3 ${
+                      item.overall === 'safe' ? 'bg-green-500' : 'bg-red-500'
+                    }`}>
+                      {item.classification}
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-600">Confidence</span>
+                        <span className={`font-bold ${
+                          item.overall === 'safe' ? 'text-green-600' : 'text-red-600'
+                        }`}>
+                          {item.confidence}%
+                        </span>
+                      </div>
+                      
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className={`h-2 rounded-full ${
+                            item.overall === 'safe' ? 'bg-green-500' : 'bg-red-500'
+                          }`}
+                          style={{ width: `${item.confidence}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* About Section */}
       <section id="about" className="pt-28 pb-16 bg-white">
