@@ -361,8 +361,8 @@ const ToolSection = ({
                         >
                           {Math.round(
                             (results.details.overall === "safe"
-                              ? results.details.probabilities[0][0]
-                              : results.details.probabilities[0][1]) * 100
+                              ? results.details.probabilities[0][0][0]
+                              : results.details.probabilities[0][0][1]) * 100
                           )}
                           %
                         </span>
@@ -379,8 +379,8 @@ const ToolSection = ({
                           style={{
                             width: `${Math.round(
                               (results.details.overall === "safe"
-                                ? results.details.probabilities[0][0]
-                                : results.details.probabilities[0][1]) * 100
+                                ? results.details.probabilities[0][0][0]
+                                : results.details.probabilities[0][0][1]) * 100
                             )}%`,
                           }}
                         ></div>

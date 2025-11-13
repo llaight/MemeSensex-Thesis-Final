@@ -2,7 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Client } from "@gradio/client";
+//import { Client } from "@gradio/client";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import HowToUseSection from "./components/HowToUseSection";
@@ -59,61 +59,104 @@ function App() {
       await new Promise((resolve) => setTimeout(resolve, stages[i].duration));
     }
 
+	//const errorMessage = "";
+
+    
     try {
-      // Connect to the Gradio client
-      const client = await Client.connect("daneigh/memesensex-backend");
+      //Connect to the Flask client instead
+      const formData = new FormData();
+      formData.append("image", imageFile);
       
-      // Make prediction using Gradio client
-      const result = await client.predict("/predict", {
-        image: imageFile
+      const response = await fetch("/process_predict", {
+        method: "POST",
+        body: formData
       });
 
-      // ADD DEBUG LOGGING
-      console.log("Raw Gradio result:", result);
-      console.log("Result data:", result.data);
-      console.log("Result data[0]:", result.data[0]);
+      // DEBUG LOGGING - Check response first
+      console.log("Response status:", response.status);
+      console.log("Response OK:", response.ok);
 
-      // Parse the result from Gradio
-      const predictionText = result.data[0]; // Gradio returns data as array
-      
-      // Extract classification from the text response
-      const isExplicit = predictionText.toLowerCase().includes('sexual') || 
-                        predictionText.toLowerCase().includes('explicit');
-      
+      // Parse JSON regardless of status (since your server returns JSON even on errors)
+      let result;
+      try {
+        result = await response.json();
+      } catch (jsonError) {
+        console.error("Failed to parse JSON:", jsonError);
+        throw new Error("Invalid response from server");
+      }
+
+      // DEBUG LOGGING      
+      console.log("Full Result:", result);
+
+      // Check for error in response FIRST - This is the key!
+      if (result.error) {
+        // Throw ONLY the error message
+        throw new Error(result.error);
+      }
+
+      // Check if response was not OK (after checking for error message)
+      if (!response.ok) {
+        throw new Error(`Server error (${response.status})`);
+      }
+
+      // Check if data exists
+      if (!result || !result.data) {
+        console.error("Missing data in response. Full result:", result);
+        throw new Error("Server returned incomplete data");
+      }
+
+      const resultData = result.data;
+
+      // Check if prediction exists
+      if (resultData.prediction === undefined || resultData.prediction === null) {
+        console.error("Missing prediction in resultData:", resultData);
+        throw new Error("Server did not return a prediction");
+      }
+
+      const predictionText = resultData.prediction;
+      const isExplicit = predictionText.toLowerCase() === 'sexual' || 
+                        predictionText.toLowerCase().includes('explicit');           
+
       const classificationResult = {
         classification: isExplicit ? "Explicit Content" : "Safe Content",
         details: {
           overall: isExplicit ? "explicit" : "safe",
-          raw_text: predictionText,
-          clean_text: predictionText,
-          probabilities: [isExplicit ? [0.1, 0.9] : [0.9, 0.1]], // Mock probabilities based on result
+          raw_text: resultData.raw_text || "N/A",
+          clean_text: resultData.clean_text || "N/A",
+          probabilities: resultData.probabilities ? [resultData.probabilities] : [[0, 0]],
         },
       };
 
-      setResults(classificationResult);
-    } catch (error) {
-      console.error(error);
-      if (error.message) {
-        toast.error("Error: " + error.message, {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "colored",
-        });
-        setImage(null);
-        setImageFile(null);
-        setInputKey(Date.now());
-        setResults(null);
-        setIsLoading(false);
-        setCurrentStage(0);
-        return;
-      }
-    }
+      console.log("TRACER ROUND ======================================");
+      console.log("Classification Result: ", classificationResult);
 
+      setResults(classificationResult);
+      
+    } catch (error) {
+      // This will now catch ALL errors including the TypeError
+      console.error("=== ERROR CAUGHT ===");
+      console.error("Error message:", error.message);
+      
+      // Display ONLY the error message (no "Error:" prefix if you don't want it)
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+      
+      // Reset state
+      setImage(null);
+      setImageFile(null);
+      setInputKey(Date.now());
+      setResults(null);
+      setIsLoading(false);
+      setCurrentStage(0);
+    }
     setIsLoading(false);
     setCurrentStage(0);
   };
